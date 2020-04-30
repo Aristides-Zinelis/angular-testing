@@ -3,11 +3,10 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ReactiveFormsModule } from '@angular/forms'
 import { CartComponent } from 'src/app/cart/cart.component';
 import { CartService } from 'src/app/cart.service';
-import { By } from '@angular/platform-browser';
 
 describe('CartComponent', ()=>{
     let comp: CartComponent;
-    let mockCartService: CartService;
+    let spyCartService: CartService;
     let fixture: ComponentFixture<CartComponent>;
 
     beforeEach(()=>{
@@ -26,7 +25,7 @@ describe('CartComponent', ()=>{
         // tienen que inyectarse aquí.
         fixture = TestBed.createComponent(CartComponent);
         comp = fixture.componentInstance;
-        mockCartService = TestBed.get(CartService)
+        spyCartService = TestBed.get(CartService)
     })
     
     it('should create component', () => {
@@ -35,7 +34,7 @@ describe('CartComponent', ()=>{
     });
 
     it('should onInit load itmes from service', () => {
-        const cartServiceSpy = spyOn(mockCartService, 'getItems').and.callThrough();
+        const cartServiceSpy = spyOn(spyCartService, 'getItems').and.callThrough();
         expect(cartServiceSpy).not.toHaveBeenCalled();
         comp.ngOnInit()
         expect(cartServiceSpy).toHaveBeenCalled();
@@ -52,12 +51,14 @@ describe('CartComponent', ()=>{
         expect(fields.length).toBe(2);
         expect(button).toBeTruthy();
         expect(button.textContent).toBe('Purchase');
-        // En el caso que tenemos bindings los cuales cambian la vista hay que llamar
-        // fixture.detectChanges();
-        //  y despues checkear los valores en la vista
     });
 
     it('should submit the form', fakeAsync (()=>{
+        // TestBed.createComponent() no hace binding de los datos
+        //  hay que decile expicitamente que monta los binding con detectChanges()
+        // En el caso que tenemos bindings los cuales cambian la vista hay que llamar
+        // fixture.detectChanges();
+        //  y despues checkear los valores en la vista
         fixture.detectChanges();
         spyOn(comp, 'onSubmit');
         let button = fixture.debugElement.nativeElement.querySelector('button');

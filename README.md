@@ -1,3 +1,29 @@
-# angular-hmemm8-wzpiae
+# angular Testing example 
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/angular-hmemm8-wzpiae)
+
+## install 
+npm install
+
+## start
+npm start
+
+## run tests
+npm run-script ng test
+
+# product-list.spec.ts
+Simple creacion de componente para testear
+
+# product-list2.spec.ts
+Stubing child components usando testBed
+
+# product-alerts-component.spec.ts
+Mock object
+
+# shipping.spec.ts
+Mock servive
+
+# cart.spec.ts
+Spy y DOM testing
+
+
+
